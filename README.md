@@ -17,8 +17,8 @@ Los ejercicios 2, 3 y 4 se conectan al NCBI, que pide un correo para identificar
 hace las peticiones. Defínelo antes de ejecutarlos (o edítalo en `comun.py`):
 
 ```bash
-export NCBI_EMAIL="tu_correo@ejemplo.com"      # Linux/macOS/Git Bash
-$env:NCBI_EMAIL = "tu_correo@ejemplo.com"      # PowerShell
+export NCBI_EMAIL="lauraaguiarperez@gmail.com"      # Linux/macOS/Git Bash
+$env:NCBI_EMAIL = "lauraaguiarperez@gmail.com"      # PowerShell
 ```
 
 ## Ejercicios
