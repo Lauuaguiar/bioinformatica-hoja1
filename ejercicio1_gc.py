@@ -8,6 +8,7 @@ Uso:
     python ejercicio1_gc.py [entrada.fasta] [salida.fasta]
 """
 
+import os
 import sys
 
 from Bio import SeqIO
@@ -17,18 +18,17 @@ from Bio.SeqUtils import gc_fraction
 from comun import DATOS, RESULTADOS
 
 
-def main():
-    entrada = sys.argv[1] if len(sys.argv) > 1 else DATOS / "secuencias_adn.fasta"
-    salida = sys.argv[2] if len(sys.argv) > 2 else RESULTADOS / "ejercicio1_proteinas.fasta"
-
+def main(entrada=DATOS / "secuencias_adn.fasta",
+         salida=RESULTADOS / "ejercicio1_proteinas.fasta"):
     proteinas = []
     for registro in SeqIO.parse(entrada, "fasta"):
         gc = gc_fraction(registro.seq) * 100
         print(f"{registro.id}: {len(registro.seq)} nt, GC = {gc:.2f}%")
 
         # Se recorta al último codón completo para evitar avisos de Biopython
+        # y se traduce hasta el primer codón de parada (el péptido real)
         longitud = len(registro.seq) - len(registro.seq) % 3
-        proteina = registro.seq[:longitud].translate()
+        proteina = registro.seq[:longitud].translate(to_stop=True)
         print(f"  Proteína: {proteina}")
 
         proteinas.append(
@@ -36,8 +36,8 @@ def main():
         )
 
     SeqIO.write(proteinas, salida, "fasta")
-    print(f"\n{len(proteinas)} secuencias de aminoácidos guardadas en {salida}")
+    print(f"\n{len(proteinas)} secuencias de aminoácidos guardadas en {os.path.relpath(salida)}")
 
 
 if __name__ == "__main__":
-    main()
+    main(*sys.argv[1:3])

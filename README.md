@@ -4,6 +4,10 @@ Soluciones a los ejercicios de la hoja 1: análisis de secuencias FASTA, descarg
 automáticas desde el NCBI con `Bio.Entrez`, lectura de archivos GenBank y búsqueda de
 información sobre proteínas.
 
+**Para corregir:** [`hoja_ejercicios_1.ipynb`](hoja_ejercicios_1.ipynb) reúne los cinco
+ejercicios ya ejecutados, con su explicación y su salida. Contiene el mismo código que los
+scripts `ejercicio*.py`, que también se pueden ejecutar por separado.
+
 ## Requisitos
 
 - Python 3.9 o superior
@@ -25,7 +29,7 @@ $env:NCBI_EMAIL = "lauraaguiarperez@gmail.com"      # PowerShell
 
 | Script | Ejercicio | Qué hace |
 |---|---|---|
-| `ejercicio1_gc.py` | 1. Porcentaje GC | Lee `data/secuencias_adn.fasta`, muestra el %GC de cada secuencia, las traduce y guarda las proteínas en `resultados/ejercicio1_proteinas.fasta` con los mismos ID y descripciones. Admite otros archivos: `python ejercicio1_gc.py entrada.fasta salida.fasta` |
+| `ejercicio1_gc.py` | 1. Porcentaje GC | Lee `data/secuencias_adn.fasta`, muestra el %GC de cada secuencia, las traduce hasta el primer codón de parada y guarda las proteínas en `resultados/ejercicio1_proteinas.fasta` con los mismos ID y descripciones. Admite otros archivos: `python ejercicio1_gc.py entrada.fasta salida.fasta` |
 | `ejercicio2_sarampion.py` | 2. El sarampión | `esearch` en *nucleotide* con `Measles morbillivirus[Organism] AND refseq[filter]`, toma `IdList[0]`, lo descarga con `efetch` en FASTA y muestra la descripción y los primeros 100 nt (genoma NC_001498.1). |
 | `ejercicio3_covid.py` | 3. La COVID-19 | Descarga NC_045512 en GenBank, filtra las *features* de tipo `gene` y muestra la lista numerada de genes con sus coordenadas (11 genes). |
 | `ejercicio4_plasmido.py` | 4. Proteínas de resistencia | Descarga el plásmido pT181 de *S. aureus*, extrae las CDS, las traduce (tabla 11, bacteriana) y marca las de resistencia. Encuentra **Tet(K)**, una bomba de expulsión que da **resistencia a la tetraciclina**. |
@@ -48,7 +52,7 @@ Todos los archivos generados (FASTA y GenBank) se guardan en `resultados/`.
   El plásmido pT181 de *S. aureus* es **`NC_001393`**, y es el que usa el script.
 - **Ejercicio 4:** en el RefSeq actual, *tet(K)* está anotado como pseudogén
   (`/pseudo`, tiene un codón de parada interno). El script lo traduce hasta la primera
-  parada y lo indica en la salida.
+  parada, pone como M su codón de inicio alternativo (TTG) y lo indica en la salida.
 - **Ejercicio 1:** las secuencias de `data/secuencias_adn.fasta` son ejemplos (la última es
   el inicio real del gen *HBB* humano). Si su longitud no es múltiplo de 3, se recortan al
   último codón completo antes de traducirlas.
@@ -56,6 +60,7 @@ Todos los archivos generados (FASTA y GenBank) se guardan en `resultados/`.
 ## Estructura
 
 ```
+├── hoja_ejercicios_1.ipynb   # Los cinco ejercicios ejecutados, con su salida
 ├── comun.py                  # Configuración de Entrez y rutas compartidas
 ├── ejercicio1_gc.py ... ejercicio5_proteinas.py
 ├── data/secuencias_adn.fasta # Entrada del ejercicio 1

@@ -63,4 +63,4 @@ for nombre, acceso in PROTEINAS.items():
     print(f"Secuencia:\n{registro.seq}\n")
 
 SeqIO.write(registros, RESULTADOS / "ejercicio5_proteinas.fasta", "fasta")
-print(f"FASTA combinado guardado en {RESULTADOS / 'ejercicio5_proteinas.fasta'}")
+print("FASTA combinado guardado en resultados/ejercicio5_proteinas.fasta")

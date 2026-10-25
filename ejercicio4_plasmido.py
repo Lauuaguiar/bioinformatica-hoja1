@@ -42,8 +42,10 @@ for cds in (f for f in plasmido.features if f.type == "CDS"):
     try:
         proteina = adn.translate(table=11, cds=True)
     except CodonTable.TranslationError:
-        # Pseudogenes: tienen paradas internas, se traduce hasta la primera
+        # Pseudogenes: tienen paradas internas, se traduce hasta la primera.
+        # El codón de inicio (aquí TTG) se pone como M, igual que con cds=True
         proteina = adn.translate(table=11, to_stop=True)
+        proteina = "M" + proteina[1:]
 
     # Comprobación con la traducción que trae anotada el propio GenBank
     anotada = cds.qualifiers.get("translation", [None])[0]
@@ -64,4 +66,4 @@ for cds in (f for f in plasmido.features if f.type == "CDS"):
 
 salida = RESULTADOS / "pT181_proteinas.fasta"
 SeqIO.write(proteinas, salida, "fasta")
-print(f"{len(proteinas)} proteínas guardadas en {salida}")
+print(f"{len(proteinas)} proteínas guardadas en resultados/{salida.name}")

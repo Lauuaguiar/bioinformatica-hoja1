@@ -1,1 +1,2 @@
 biopython>=1.80
+jupyter  # solo para abrir hoja_ejercicios_1.ipynb
